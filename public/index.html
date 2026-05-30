@@ -763,15 +763,14 @@ function applyFix(i){
   onInput(ta);
   showToast('Düzəliş tətbiq edildi ✓');
   lastErrors.splice(i,1);
-  // remove card by data-index or just re-render all cards
   const rpBody = document.getElementById('rpBody');
-  const cards = rpBody.querySelectorAll('.ic');
-  cards.forEach(c => c.remove());
+  // remove everything except score-summary
+  Array.from(rpBody.children).forEach(c => { if(!c.classList.contains('score-summary')) c.remove(); });
   if(lastErrors.length===0){
     clearHighlights();
     document.getElementById('badge-grammar').style.display='none';
     document.getElementById('rpSub').textContent='Heç bir xəta yoxdur';
-    rpBody.insertAdjacentHTML('afterbegin','<div class="ok-card">✅ Bütün xətalar düzəldildi!</div>');
+    rpBody.insertAdjacentHTML('beforeend','<div class="ok-card">✅ Bütün xətalar düzəldildi!</div>');
   } else {
     document.getElementById('rpSub').textContent=lastErrors.length+' problem qaldı';
     document.getElementById('badge-grammar').textContent=lastErrors.length;
