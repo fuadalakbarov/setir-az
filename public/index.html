@@ -759,7 +759,7 @@ function applyFix(i){
   const err = lastErrors[i];
   if(!err) return;
   const ta = document.getElementById('mainTa');
-  ta.value = ta.value.replace(err.original, err.fixed);
+  ta.value = ta.value.split(err.original).join(err.fixed);
   onInput(ta);
   showToast('Düzəliş tətbiq edildi ✓');
   lastErrors.splice(i,1);
