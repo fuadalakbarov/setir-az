@@ -9,7 +9,10 @@ async function groq(prompt) {
     },
     body: JSON.stringify({
       model: 'llama-3.3-70b-versatile',
-      messages: [{ role: 'user', content: prompt }],
+      messages: [
+        { role: 'system', content: 'Sən Azərbaycan dili mütəxəssisisən. Həmişə düzgün Azərbaycan əlifbası ilə yaz: ə, ö, ü, ğ, ş, ç, ı, İ hərflərini mütləq istifadə et. Heç vaxt e əvəzinə ə, s əvəzinə ş, g əvəzinə ğ yazmağı unutma.' },
+        { role: 'user', content: prompt }
+      ],
       temperature: 0.3
     })
   });
