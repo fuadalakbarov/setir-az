@@ -750,11 +750,22 @@ async function doGrammar(text){
   if(d.corrected && d.corrected !== text){
     html += `<div class="rlbl" style="margin-top:4px">Tam düzəldilmiş mətn</div>
       <div class="rbox">${escHtml(d.corrected)}</div>
+      <button class="copy-btn" style="background:var(--blue);color:white;margin-bottom:4px" onclick="applyAllFixes(${JSON.stringify(d.corrected)})">✅ Hamısını düzəlt</button>
       <button class="copy-btn" onclick="doCopy(this,${JSON.stringify(d.corrected)})">📋 Kopyala</button>`;
   }
   setRpBody(html);
 }
 
+function applyAllFixes(corrected){
+  const ta=document.getElementById("mainTa");
+  ta.value=corrected;
+  onInput(ta);
+  lastErrors=[];
+  clearHighlights();
+  document.getElementById("badge-grammar").style.display="none";
+  document.getElementById("rpSub").textContent="Heç bir xəta yoxdur";
+  showToast("Bütün xətalar düzəldildi ✓");
+}
 function applyFix(i){
   const err = lastErrors[i];
   if(!err) return;
