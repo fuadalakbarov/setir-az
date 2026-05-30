@@ -762,6 +762,7 @@ function applyFix(i){
   ta.value = ta.value.replace(err.original, err.fixed);
   onInput(ta);
   showToast('Düzəliş tətbiq edildi ✓');
+  const allC=document.querySelectorAll('#rpBody .ic');if(allC[i])allC[i].remove();lastErrors.length===0?(clearHighlights(),document.getElementById('badge-grammar').style.display='none'):renderHighlights(ta.value,lastErrors);
   lastErrors.splice(i,1);
   if(lastErrors.length===0){
     clearHighlights();
