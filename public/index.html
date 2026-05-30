@@ -100,7 +100,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(250,251,252,.94);backdrop-
 /* editor area */
 .g-body{flex:1;padding:16px;display:flex;flex-direction:column;gap:10px;position:relative}
 .editor-container{flex:1;position:relative;min-height:260px}
-#mainTa{position:absolute;inset:0;width:100%;height:100%;border:1.5px solid var(--border2);border-radius:10px;padding:16px;font-family:inherit;font-size:14.5px;line-height:1.85;color:transparent;caret-color:var(--ink);background:transparent;resize:none;outline:none;z-index:2;transition:border-color .2s}
+#mainTa{position:absolute;inset:0;width:100%;height:100%;border:1.5px solid var(--border2);border-radius:10px;padding:16px;font-family:inherit;font-size:14.5px;line-height:1.85;color:var(--ink);caret-color:var(--ink);background:transparent;resize:none;outline:none;z-index:2;transition:border-color .2s}
 #mainTa:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.09)}
 #mainTa::placeholder{color:var(--ink4)}
 .highlight-layer{position:absolute;inset:0;border:1.5px solid transparent;border-radius:10px;padding:16px;font-family:inherit;font-size:14.5px;line-height:1.85;color:var(--ink);word-wrap:break-word;white-space:pre-wrap;pointer-events:none;z-index:1;overflow:auto}
@@ -990,6 +990,8 @@ function showToast(msg){
   toastT=setTimeout(()=>t.style.opacity='0',3200);
 }
 
+// paste fix
+document.getElementById("mainTa").addEventListener("paste",function(){setTimeout(()=>onInput(this),10);});
 // sync highlight scroll
 document.getElementById('mainTa').addEventListener('scroll',function(){
   document.getElementById('hlLayer').scrollTop=this.scrollTop;
