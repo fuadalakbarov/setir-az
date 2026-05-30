@@ -504,6 +504,7 @@ let activeTool = 'grammar';
 let activeTone = 'resmi';
 let activeGoal = null;
 let lastErrors = [];
+let lastCorrected = "";
 
 // ── SCROLL ───────────────────────────────────────────────────────────────────
 function scrollTo(sel){ document.querySelector(sel)?.scrollIntoView({behavior:'smooth'}); }
@@ -719,6 +720,7 @@ async function doGrammar(text){
   // result panel
   document.getElementById('rpSub').textContent = lastErrors.length ? `${lastErrors.length} problem tapıldı` : 'Heç bir xəta yoxdur';
 
+  lastCorrected = d.corrected || "";
   let html = `<div class="score-summary">
     <div class="ss-num" style="color:${col}">${sc}</div>
     <div class="ss-label">/ 100 — Yazı balı</div>
@@ -750,15 +752,15 @@ async function doGrammar(text){
   if(d.corrected && d.corrected !== text){
     html += `<div class="rlbl" style="margin-top:4px">Tam düzəldilmiş mətn</div>
       <div class="rbox">${escHtml(d.corrected)}</div>
-      <button class="copy-btn" style="background:var(--blue);color:white;margin-bottom:4px" onclick="applyAllFixes(${JSON.stringify(d.corrected)})">✅ Hamısını düzəlt</button>
+      <button class="copy-btn" style="background:var(--blue);color:white;margin-bottom:4px" onclick="applyAllFixes()">✅ Hamısını düzəlt</button>
       <button class="copy-btn" onclick="doCopy(this,${JSON.stringify(d.corrected)})">📋 Kopyala</button>`;
   }
   setRpBody(html);
 }
 
-function applyAllFixes(corrected){
+function applyAllFixes(){
   const ta=document.getElementById("mainTa");
-  ta.value=corrected;
+  ta.value=lastCorrected;
   onInput(ta);
   lastErrors=[];
   clearHighlights();
